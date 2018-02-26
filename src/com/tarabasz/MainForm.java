@@ -26,6 +26,9 @@ public class MainForm extends Container {
     private JLabel redLockButton;
     private JLabel enrcryptLabel;
     private JLabel decryptLabel;
+    private JTextPane sourceTextField;
+    private JLabel sourceImage;
+    private JLabel addTextButton;
     private ResourceBundle labelsBundle;
 
     public MainForm() throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, URISyntaxException {
@@ -48,10 +51,12 @@ public class MainForm extends Container {
     }
 
     private void setElementsIcons() throws URISyntaxException {
-        this.greenLockButton.setIcon(getImageIconFromRsources("lock",90,90));
+        this.greenLockButton.setIcon(getImageIconFromRsources("lock", 90, 90));
         this.greenLockButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        this.redLockButton.setIcon(getImageIconFromRsources("unlock",90,90));
+        this.redLockButton.setIcon(getImageIconFromRsources("unlock", 90, 90));
         this.redLockButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        this.sourceImage.setIcon(getImageIconFromRsources("photoMock", 300, 300));
+        this.addTextButton.setIcon(getImageIconFromRsources("textFileButton", 25, 25));
 
     }
 
@@ -78,6 +83,7 @@ public class MainForm extends Container {
         infoButton.setText(labelsBundle.getString("infoButtonLabel"));
         enrcryptLabel.setText(labelsBundle.getString("enrcryptLabel"));
         decryptLabel.setText(labelsBundle.getString("decryptLabel"));
+        sourceTextField.setText(labelsBundle.getString("sourceTextField"));
     }
 
     private static ImageIcon getImageIconFromRsources(String resourceName) throws URISyntaxException {
@@ -86,14 +92,15 @@ public class MainForm extends Container {
         ImageIcon img = new ImageIcon(file.getAbsolutePath());
         return img;
     }
+
     private static Image getImageFromRsources(String resourceName) throws URISyntaxException {
         return getImageIconFromRsources(resourceName).getImage();
     }
-//
+
     private static ImageIcon getImageIconFromRsources(String resourceName, int width, int height) throws URISyntaxException {
         ImageIcon img = getImageIconFromRsources(resourceName);
         Image image = img.getImage();
-        Image newimg = image.getScaledInstance(width, height,  java.awt.Image.SCALE_SMOOTH);
+        Image newimg = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
         img = new ImageIcon(newimg);
         return img;
     }
