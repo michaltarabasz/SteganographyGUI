@@ -89,7 +89,7 @@ public class MainForm extends Container {
     private static Image getImageFromRsources(String resourceName) throws URISyntaxException {
         return getImageIconFromRsources(resourceName).getImage();
     }
-
+//
     private static ImageIcon getImageIconFromRsources(String resourceName, int width, int height) throws URISyntaxException {
         ImageIcon img = getImageIconFromRsources(resourceName);
         Image image = img.getImage();
