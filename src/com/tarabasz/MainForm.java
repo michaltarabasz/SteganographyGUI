@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -29,6 +30,8 @@ public class MainForm extends Container {
     private JTextPane sourceTextField;
     private JLabel sourceImage;
     private JLabel addTextButton;
+    private JLabel removeImageButton;
+    private JLabel addImageButton;
     private ResourceBundle labelsBundle;
 
     public MainForm() throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, URISyntaxException {
@@ -48,6 +51,8 @@ public class MainForm extends Container {
             }
         });
 
+        greenLockButton.addMouseListener(new MouseAdapter() {
+        });
     }
 
     private void setElementsIcons() throws URISyntaxException {
@@ -57,6 +62,11 @@ public class MainForm extends Container {
         this.redLockButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.sourceImage.setIcon(getImageIconFromRsources("photoMock", 300, 300));
         this.addTextButton.setIcon(getImageIconFromRsources("textFileButton", 25, 25));
+        this.addTextButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        this.addImageButton.setIcon(getImageIconFromRsources("addButton", 40, 40));
+        this.addImageButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        this.removeImageButton.setIcon(getImageIconFromRsources("removeButton", 40, 40));
+        this.removeImageButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
     }
 
