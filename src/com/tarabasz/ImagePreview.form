@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.tarabasz.ImagePreview">
+  <grid id="27dc6" binding="imagePreviewPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+    <constraints>
+      <xy x="20" y="20" width="863" height="678"/>
+    </constraints>
+    <properties>
+      <background color="-984321"/>
+      <preferredSize width="1000" height="580"/>
+    </properties>
+    <border type="none"/>
+    <children/>
+  </grid>
+</form>

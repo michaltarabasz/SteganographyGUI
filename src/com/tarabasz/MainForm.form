@@ -177,158 +177,204 @@
           </grid>
         </children>
       </grid>
-      <grid id="fa30" layout-manager="FlowLayout" hgap="0" vgap="1" flow-align="1">
+      <grid id="4d00c" binding="bottomPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints/>
         <properties>
-          <background color="-16777216"/>
-          <preferredSize width="300" height="530"/>
+          <background color="-1"/>
+          <preferredSize width="1000" height="580"/>
         </properties>
         <border type="none"/>
         <children>
-          <component id="ce27" class="javax.swing.JLabel" binding="sourceImage">
+          <grid id="fa30" layout-manager="FlowLayout" hgap="0" vgap="1" flow-align="1">
             <constraints/>
             <properties>
-              <background color="-1"/>
-              <opaque value="true"/>
-              <preferredSize width="298" height="478"/>
-              <text value="Label"/>
-            </properties>
-          </component>
-          <grid id="b152b" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="2">
-            <constraints/>
-            <properties>
-              <background color="-1"/>
-              <preferredSize width="300" height="50"/>
+              <background color="-16777216"/>
+              <preferredSize width="300" height="530"/>
             </properties>
             <border type="none"/>
             <children>
-              <component id="8c2c8" class="javax.swing.JLabel" binding="removeImageButton">
-                <constraints/>
-                <properties>
-                  <opaque value="true"/>
-                  <preferredSize width="40" height="40"/>
-                  <text value="Label"/>
-                </properties>
-              </component>
-              <hspacer id="68d34">
-                <constraints/>
-              </hspacer>
-              <hspacer id="c224">
-                <constraints/>
-              </hspacer>
-              <hspacer id="d7dcf">
-                <constraints/>
-              </hspacer>
-              <component id="94ea7" class="javax.swing.JLabel" binding="addImageButton">
-                <constraints/>
-                <properties>
-                  <opaque value="true"/>
-                  <preferredSize width="40" height="40"/>
-                  <text value="Label"/>
-                </properties>
-              </component>
-            </children>
-          </grid>
-        </children>
-      </grid>
-      <grid id="b48b7" layout-manager="FlowLayout" hgap="1" vgap="1" flow-align="1">
-        <constraints/>
-        <properties>
-          <background color="-16777216"/>
-          <preferredSize width="200" height="530"/>
-        </properties>
-        <border type="none"/>
-        <children>
-          <component id="9967b" class="javax.swing.JTextPane" binding="sourceTextField">
-            <constraints/>
-            <properties>
-              <background color="-1"/>
-              <caretColor color="-1"/>
-              <enabled value="true"/>
-              <foreground color="-16777216"/>
-              <preferredSize width="198" height="150"/>
-              <text value="Type here text to encode or add text source from file using button below"/>
-            </properties>
-          </component>
-          <grid id="69c82" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
-            <constraints/>
-            <properties>
-              <background color="-1"/>
-              <preferredSize width="200" height="378"/>
-            </properties>
-            <border type="none"/>
-            <children>
-              <grid id="a0e0" layout-manager="FlowLayout" hgap="0" vgap="5" flow-align="2">
+              <component id="ce27" class="javax.swing.JLabel" binding="sourceImage">
                 <constraints/>
                 <properties>
                   <background color="-1"/>
-                  <preferredSize width="200" height="32"/>
+                  <opaque value="true"/>
+                  <preferredSize width="298" height="478"/>
+                  <text value="Label"/>
+                </properties>
+              </component>
+              <grid id="b152b" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="2">
+                <constraints/>
+                <properties>
+                  <background color="-1"/>
+                  <preferredSize width="300" height="50"/>
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="6f378" class="javax.swing.JLabel" binding="addTextButton">
+                  <component id="8c2c8" class="javax.swing.JLabel" binding="removeImageButton">
                     <constraints/>
                     <properties>
-                      <autoscrolls value="true"/>
-                      <background color="-1"/>
                       <opaque value="true"/>
-                      <preferredSize width="25" height="25"/>
+                      <preferredSize width="40" height="40"/>
+                      <text value="Label"/>
+                    </properties>
+                  </component>
+                  <hspacer id="68d34">
+                    <constraints/>
+                  </hspacer>
+                  <hspacer id="c224">
+                    <constraints/>
+                  </hspacer>
+                  <hspacer id="d7dcf">
+                    <constraints/>
+                  </hspacer>
+                  <component id="94ea7" class="javax.swing.JLabel" binding="addImageButton">
+                    <constraints/>
+                    <properties>
+                      <opaque value="true"/>
+                      <preferredSize width="40" height="40"/>
                       <text value="Label"/>
                     </properties>
                   </component>
                 </children>
               </grid>
-              <grid id="dcd31" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            </children>
+          </grid>
+          <grid id="b48b7" layout-manager="FlowLayout" hgap="1" vgap="1" flow-align="1">
+            <constraints/>
+            <properties>
+              <background color="-16777216"/>
+              <preferredSize width="200" height="530"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="9967b" class="javax.swing.JTextPane" binding="sourceTextField">
                 <constraints/>
                 <properties>
                   <background color="-1"/>
-                  <preferredSize width="200" height="200"/>
+                  <caretColor color="-1"/>
+                  <enabled value="true"/>
+                  <foreground color="-16777216"/>
+                  <preferredSize width="198" height="150"/>
+                  <text value="Type here text to encode or add text source from file using button below"/>
+                </properties>
+              </component>
+              <grid id="69c82" layout-manager="FlowLayout" hgap="0" vgap="5" flow-align="1">
+                <constraints/>
+                <properties>
+                  <background color="-1"/>
+                  <preferredSize width="200" height="378"/>
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="dc840" class="javax.swing.JLabel" binding="encryptionByteConLabel">
+                  <grid id="a0e0" layout-manager="FlowLayout" hgap="0" vgap="5" flow-align="2">
                     <constraints/>
                     <properties>
-                      <font size="14" style="1"/>
-                      <horizontalAlignment value="0"/>
-                      <preferredSize width="200" height="50"/>
-                      <text value="Label"/>
+                      <background color="-1"/>
+                      <preferredSize width="200" height="32"/>
                     </properties>
-                  </component>
-                  <component id="7e6d9" class="javax.swing.JLabel" binding="oneBitButton">
+                    <border type="none"/>
+                    <children>
+                      <component id="6f378" class="javax.swing.JLabel" binding="addTextButton">
+                        <constraints/>
+                        <properties>
+                          <autoscrolls value="true"/>
+                          <background color="-1"/>
+                          <opaque value="true"/>
+                          <preferredSize width="25" height="25"/>
+                          <text value="Label"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                  <grid id="dcd31" layout-manager="FlowLayout" hgap="5" vgap="0" flow-align="1">
                     <constraints/>
                     <properties>
-                      <background color="-15921989"/>
-                      <opaque value="true"/>
-                      <preferredSize width="60" height="60"/>
-                      <text value="Label"/>
+                      <background color="-1"/>
+                      <preferredSize width="200" height="250"/>
                     </properties>
-                  </component>
-                  <component id="cf337" class="javax.swing.JLabel" binding="twoBitButton">
-                    <constraints/>
-                    <properties>
-                      <background color="-15921989"/>
-                      <opaque value="true"/>
-                      <preferredSize width="60" height="60"/>
-                      <text value="Label"/>
-                    </properties>
-                  </component>
-                  <component id="e1e48" class="javax.swing.JLabel" binding="fourBitButton">
-                    <constraints/>
-                    <properties>
-                      <background color="-15921989"/>
-                      <opaque value="true"/>
-                      <preferredSize width="60" height="60"/>
-                      <text value="Label"/>
-                    </properties>
-                  </component>
-                  <component id="c98c7" class="javax.swing.JLabel" binding="arrowUp">
-                    <constraints/>
-                    <properties>
-                      <preferredSize width="200" height="60"/>
-                      <text value=""/>
-                    </properties>
-                  </component>
+                    <border type="none"/>
+                    <children>
+                      <component id="dc840" class="javax.swing.JLabel" binding="encryptionByteConLabel">
+                        <constraints/>
+                        <properties>
+                          <font size="14" style="1"/>
+                          <horizontalAlignment value="0"/>
+                          <preferredSize width="200" height="70"/>
+                          <text value="Label"/>
+                        </properties>
+                      </component>
+                      <component id="7e6d9" class="javax.swing.JLabel" binding="oneBitButton">
+                        <constraints/>
+                        <properties>
+                          <background color="-15921989"/>
+                          <opaque value="true"/>
+                          <preferredSize width="60" height="60"/>
+                          <text value="Label"/>
+                        </properties>
+                      </component>
+                      <component id="cf337" class="javax.swing.JLabel" binding="twoBitButton">
+                        <constraints/>
+                        <properties>
+                          <background color="-15921989"/>
+                          <opaque value="true"/>
+                          <preferredSize width="60" height="60"/>
+                          <text value="Label"/>
+                        </properties>
+                      </component>
+                      <component id="e1e48" class="javax.swing.JLabel" binding="fourBitButton">
+                        <constraints/>
+                        <properties>
+                          <background color="-15921989"/>
+                          <opaque value="true"/>
+                          <preferredSize width="60" height="60"/>
+                          <text value="Label"/>
+                        </properties>
+                      </component>
+                      <grid id="1b877" layout-manager="FlowLayout" hgap="35" vgap="0" flow-align="1">
+                        <constraints/>
+                        <properties>
+                          <background color="-1"/>
+                          <preferredSize width="200" height="30"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <component id="c98c7" class="javax.swing.JLabel" binding="oneBitArrowUp">
+                            <constraints/>
+                            <properties>
+                              <background color="-1"/>
+                              <horizontalAlignment value="2"/>
+                              <iconTextGap value="4"/>
+                              <opaque value="true"/>
+                              <preferredSize width="30" height="30"/>
+                              <text value=""/>
+                            </properties>
+                          </component>
+                          <component id="21c10" class="javax.swing.JLabel" binding="twoBitArrowUp">
+                            <constraints/>
+                            <properties>
+                              <background color="-1"/>
+                              <horizontalAlignment value="2"/>
+                              <iconTextGap value="4"/>
+                              <opaque value="true"/>
+                              <preferredSize width="30" height="30"/>
+                              <text value=""/>
+                            </properties>
+                          </component>
+                          <component id="a3f39" class="javax.swing.JLabel" binding="fourBitArrowUp">
+                            <constraints/>
+                            <properties>
+                              <background color="-1"/>
+                              <horizontalAlignment value="2"/>
+                              <iconTextGap value="4"/>
+                              <opaque value="true"/>
+                              <preferredSize width="30" height="30"/>
+                              <text value=""/>
+                            </properties>
+                          </component>
+                        </children>
+                      </grid>
+                    </children>
+                  </grid>
                 </children>
               </grid>
             </children>

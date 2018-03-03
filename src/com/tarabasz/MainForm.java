@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -18,7 +19,7 @@ public class MainForm extends Container {
         String ENGLISH = "en";
     }
 
-
+    private JFrame frame;
     private JPanel panel;
     private JButton plButton;
     private JButton enButton;
@@ -36,13 +37,30 @@ public class MainForm extends Container {
     private JLabel oneBitButton;
     private JLabel twoBitButton;
     private JLabel fourBitButton;
+    private JLabel twoBitArrowUp;
+    private JLabel fourBitArrowUp;
+    private JLabel oneBitArrowUp;
+    private JPanel bottomPanel;
+    private JPanel bottomPanelHidden;
     private JLabel arrowUp;
     private ResourceBundle labelsBundle;
+    ImagePreview imagePreview;
 
     public MainForm() throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, URISyntaxException {
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         setLanguage("en");
         setElementsIcons();
+        this.frame = new JFrame("Steganography - Michal Tarabasz");
+        frame.setIconImage(getImageFromRsources("appIco"));
+        frame.setContentPane(this.panel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
+        frame.setVisible(true);
+        imagePreview = new ImagePreview();
+        frame.getContentPane().add(imagePreview.getImagePreviewPanel());
+        frame.getContentPane().revalidate();
         plButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -56,11 +74,52 @@ public class MainForm extends Container {
             }
         });
 
+        oneBitButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                oneBitArrowUp.setIcon(getImageIconFromRsources("arrowUp", 30, 30));
+                twoBitArrowUp.setIcon(null);
+                fourBitArrowUp.setIcon(null);
+                super.mouseClicked(e);
+            }
+        });
+        twoBitButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                oneBitArrowUp.setIcon(null);
+                twoBitArrowUp.setIcon(getImageIconFromRsources("arrowUp", 30, 30));
+                fourBitArrowUp.setIcon(null);
+                super.mouseClicked(e);
+            }
+        });
+        fourBitButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                oneBitArrowUp.setIcon(null);
+                twoBitArrowUp.setIcon(null);
+                fourBitArrowUp.setIcon(getImageIconFromRsources("arrowUp", 30, 30));
+                super.mouseClicked(e);
+            }
+        });
+        redLockButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                bottomPanel.setVisible(false);
+                imagePreview.getImagePreviewPanel().setVisible(true);
+                super.mouseClicked(e);
+            }
+        });
         greenLockButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                bottomPanel.setVisible(true);
+                imagePreview.getImagePreviewPanel().setVisible(false);
+                super.mouseClicked(e);
+            }
         });
     }
 
-    private void setElementsIcons() throws URISyntaxException {
+    public void setElementsIcons() throws URISyntaxException {
         this.greenLockButton.setIcon(getImageIconFromRsources("lock", 90, 90));
         this.greenLockButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.redLockButton.setIcon(getImageIconFromRsources("unlock", 90, 90));
@@ -78,19 +137,13 @@ public class MainForm extends Container {
         this.twoBitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.fourBitButton.setIcon(getImageIconFromRsources("4bits", 60, 60));
         this.fourBitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        this.arrowUp.setIcon(getImageIconFromRsources("arrowUp", 60, 60));
+        this.oneBitArrowUp.setIcon(getImageIconFromRsources("arrowUp", 30, 30));
+/*        this.twoBitArrowUp.setIcon(getImageIconFromRsources("arrowUp", 30, 30));
+        this.fourBitArrowUp.setIcon(getImageIconFromRsources("arrowUp", 30, 30));*/
     }
 
     public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, IOException, URISyntaxException {
-        JFrame frame = new JFrame("Steganography - Michal Tarabasz");
         MainForm mainForm = new MainForm();
-        frame.setIconImage(getImageFromRsources("appIco"));
-        frame.setContentPane(mainForm.panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
-        frame.setVisible(true);
     }
 
     public void setLanguage(String language) {
@@ -108,18 +161,23 @@ public class MainForm extends Container {
         encryptionByteConLabel.setText(labelsBundle.getString("encryptionByteConLabel"));
     }
 
-    private static ImageIcon getImageIconFromRsources(String resourceName) throws URISyntaxException {
+    private static ImageIcon getImageIconFromRsources(String resourceName)  {
         ClassLoader classLoader = MainForm.class.getClassLoader();
-        File file = new File(classLoader.getResource("com/tarabasz/resources/" + resourceName + ".png").toURI());
+        File file = null;
+        try {
+            file = new File(classLoader.getResource("com/tarabasz/resources/" + resourceName + ".png").toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         ImageIcon img = new ImageIcon(file.getAbsolutePath());
         return img;
     }
 
-    private static Image getImageFromRsources(String resourceName) throws URISyntaxException {
+    private static Image getImageFromRsources(String resourceName) {
         return getImageIconFromRsources(resourceName).getImage();
     }
 
-    private static ImageIcon getImageIconFromRsources(String resourceName, int width, int height) throws URISyntaxException {
+    private static ImageIcon getImageIconFromRsources(String resourceName, int width, int height) {
         ImageIcon img = getImageIconFromRsources(resourceName);
         Image image = img.getImage();
         Image newimg = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
