@@ -32,6 +32,11 @@ public class MainForm extends Container {
     private JLabel addTextButton;
     private JLabel removeImageButton;
     private JLabel addImageButton;
+    private JLabel encryptionByteConLabel;
+    private JLabel oneBitButton;
+    private JLabel twoBitButton;
+    private JLabel fourBitButton;
+    private JLabel arrowUp;
     private ResourceBundle labelsBundle;
 
     public MainForm() throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, URISyntaxException {
@@ -67,7 +72,13 @@ public class MainForm extends Container {
         this.addImageButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.removeImageButton.setIcon(getImageIconFromRsources("removeButton", 40, 40));
         this.removeImageButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
+        this.oneBitButton.setIcon(getImageIconFromRsources("1bit", 60, 60));
+        this.oneBitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        this.twoBitButton.setIcon(getImageIconFromRsources("2bit", 60, 60));
+        this.twoBitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        this.fourBitButton.setIcon(getImageIconFromRsources("4bits", 60, 60));
+        this.fourBitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        this.arrowUp.setIcon(getImageIconFromRsources("arrowUp", 60, 60));
     }
 
     public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, IOException, URISyntaxException {
@@ -94,6 +105,7 @@ public class MainForm extends Container {
         enrcryptLabel.setText(labelsBundle.getString("enrcryptLabel"));
         decryptLabel.setText(labelsBundle.getString("decryptLabel"));
         sourceTextField.setText(labelsBundle.getString("sourceTextField"));
+        encryptionByteConLabel.setText(labelsBundle.getString("encryptionByteConLabel"));
     }
 
     private static ImageIcon getImageIconFromRsources(String resourceName) throws URISyntaxException {
