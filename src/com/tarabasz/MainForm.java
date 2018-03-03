@@ -119,12 +119,12 @@ public class MainForm extends Container {
         });
     }
 
-    public void setElementsIcons() throws URISyntaxException {
+    public void setElementsIcons() {
         this.greenLockButton.setIcon(getImageIconFromRsources("lock", 90, 90));
         this.greenLockButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.redLockButton.setIcon(getImageIconFromRsources("unlock", 90, 90));
         this.redLockButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        this.sourceImage.setIcon(getImageIconFromRsources("photoMock", 300, 300));
+        this.sourceImage.setIcon(getImageIconFromRsources("photoMock", 350, 350));
         this.addTextButton.setIcon(getImageIconFromRsources("textFileButton", 25, 25));
         this.addTextButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.addImageButton.setIcon(getImageIconFromRsources("addButton", 40, 40));
@@ -138,8 +138,6 @@ public class MainForm extends Container {
         this.fourBitButton.setIcon(getImageIconFromRsources("4bits", 60, 60));
         this.fourBitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.oneBitArrowUp.setIcon(getImageIconFromRsources("arrowUp", 30, 30));
-/*        this.twoBitArrowUp.setIcon(getImageIconFromRsources("arrowUp", 30, 30));
-        this.fourBitArrowUp.setIcon(getImageIconFromRsources("arrowUp", 30, 30));*/
     }
 
     public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, IOException, URISyntaxException {
