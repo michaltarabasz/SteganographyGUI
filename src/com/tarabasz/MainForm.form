@@ -243,7 +243,7 @@
             <constraints/>
             <properties>
               <background color="-16777216"/>
-              <preferredSize width="200" height="530"/>
+              <preferredSize width="250" height="530"/>
             </properties>
             <border type="none"/>
             <children>
@@ -254,7 +254,7 @@
                   <caretColor color="-1"/>
                   <enabled value="true"/>
                   <foreground color="-16777216"/>
-                  <preferredSize width="198" height="150"/>
+                  <preferredSize width="248" height="170"/>
                   <text value="Type here text to encode or add text source from file using button below"/>
                 </properties>
               </component>
@@ -262,7 +262,7 @@
                 <constraints/>
                 <properties>
                   <background color="-1"/>
-                  <preferredSize width="200" height="378"/>
+                  <preferredSize width="250" height="378"/>
                 </properties>
                 <border type="none"/>
                 <children>
@@ -270,7 +270,7 @@
                     <constraints/>
                     <properties>
                       <background color="-1"/>
-                      <preferredSize width="200" height="32"/>
+                      <preferredSize width="250" height="32"/>
                     </properties>
                     <border type="none"/>
                     <children>
@@ -286,22 +286,29 @@
                       </component>
                     </children>
                   </grid>
-                  <grid id="dcd31" layout-manager="FlowLayout" hgap="5" vgap="0" flow-align="1">
+                  <grid id="dcd31" layout-manager="FlowLayout" hgap="20" vgap="0" flow-align="1">
                     <constraints/>
                     <properties>
                       <background color="-1"/>
-                      <preferredSize width="200" height="250"/>
+                      <preferredSize width="250" height="250"/>
                     </properties>
                     <border type="none"/>
                     <children>
+                      <component id="516b" class="javax.swing.JLabel">
+                        <constraints/>
+                        <properties>
+                          <preferredSize width="250" height="90"/>
+                          <text value=""/>
+                        </properties>
+                      </component>
                       <component id="dc840" class="javax.swing.JLabel" binding="encryptionByteConLabel">
                         <constraints/>
                         <properties>
                           <font size="14" style="1"/>
                           <horizontalAlignment value="0"/>
-                          <preferredSize width="200" height="120"/>
+                          <preferredSize width="250" height="40"/>
                           <text value="Label"/>
-                          <verticalAlignment value="3"/>
+                          <verticalAlignment value="0"/>
                         </properties>
                       </component>
                       <component id="7e6d9" class="javax.swing.JLabel" binding="oneBitButton">
@@ -331,11 +338,11 @@
                           <text value="Label"/>
                         </properties>
                       </component>
-                      <grid id="1b877" layout-manager="FlowLayout" hgap="35" vgap="0" flow-align="1">
+                      <grid id="1b877" layout-manager="FlowLayout" hgap="50" vgap="0" flow-align="1">
                         <constraints/>
                         <properties>
                           <background color="-1"/>
-                          <preferredSize width="200" height="30"/>
+                          <preferredSize width="250" height="30"/>
                         </properties>
                         <border type="none"/>
                         <children>
@@ -380,14 +387,40 @@
               </grid>
             </children>
           </grid>
-          <grid id="ade0f" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
+          <grid id="ade0f" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
             <constraints/>
             <properties>
-              <preferredSize width="320" height="530"/>
+              <background color="-1"/>
+              <preferredSize width="250" height="530"/>
             </properties>
             <border type="none"/>
-            <children/>
+            <children>
+              <component id="976c3" class="javax.swing.JLabel">
+                <constraints/>
+                <properties>
+                  <preferredSize width="250" height="170"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="a71c7" class="javax.swing.JLabel" binding="encryptButton">
+                <constraints/>
+                <properties>
+                  <background color="-1"/>
+                  <opaque value="true"/>
+                  <preferredSize width="70" height="70"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="accc2" class="javax.swing.JLabel" binding="encryptButtonLabel">
+                <constraints/>
+                <properties>
+                  <font size="16"/>
+                  <horizontalAlignment value="0"/>
+                  <preferredSize width="250" height="30"/>
+                  <text value="Label"/>
+                </properties>
+              </component>
+            </children>
           </grid>
         </children>
       </grid>

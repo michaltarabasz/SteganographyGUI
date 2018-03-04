@@ -41,6 +41,8 @@ public class MainForm extends Container {
     private JLabel fourBitArrowUp;
     private JLabel oneBitArrowUp;
     private JPanel bottomPanel;
+    private JLabel encryptButtonLabel;
+    private JLabel encryptButton;
     private JPanel bottomPanelHidden;
     private JLabel arrowUp;
     private ResourceBundle labelsBundle;
@@ -138,6 +140,8 @@ public class MainForm extends Container {
         this.fourBitButton.setIcon(getImageIconFromRsources("4bits", 60, 60));
         this.fourBitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.oneBitArrowUp.setIcon(getImageIconFromRsources("arrowUp", 30, 30));
+        this.encryptButton.setIcon(getImageIconFromRsources("encryptButton", 70, 70));
+        this.encryptButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, IOException, URISyntaxException {
@@ -157,6 +161,7 @@ public class MainForm extends Container {
         decryptLabel.setText(labelsBundle.getString("decryptLabel"));
         sourceTextField.setText(labelsBundle.getString("sourceTextField"));
         encryptionByteConLabel.setText(labelsBundle.getString("encryptionByteConLabel"));
+        encryptButtonLabel.setText(labelsBundle.getString("encryptButtonLabel"));
     }
 
     private static ImageIcon getImageIconFromRsources(String resourceName)  {
