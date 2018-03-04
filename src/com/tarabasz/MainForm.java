@@ -43,6 +43,9 @@ public class MainForm extends Container {
     private JPanel bottomPanel;
     private JLabel encryptButtonLabel;
     private JLabel encryptButton;
+    private JLabel errorMessageLabel;
+    private JPanel encryptPanel;
+    private JPanel decryptPanel;
     private JPanel bottomPanelHidden;
     private JLabel arrowUp;
     private ResourceBundle labelsBundle;
@@ -108,6 +111,10 @@ public class MainForm extends Container {
             public void mouseClicked(MouseEvent e) {
                 bottomPanel.setVisible(false);
                 imagePreview.getImagePreviewPanel().setVisible(true);
+                decryptPanel.setOpaque(true);
+                decryptPanel.repaint();
+                encryptPanel.setOpaque(false);
+                encryptPanel.repaint();
                 super.mouseClicked(e);
             }
         });
@@ -116,6 +123,10 @@ public class MainForm extends Container {
             public void mouseClicked(MouseEvent e) {
                 bottomPanel.setVisible(true);
                 imagePreview.getImagePreviewPanel().setVisible(false);
+                decryptPanel.setOpaque(false);
+                decryptPanel.repaint();
+                encryptPanel.setOpaque(true);
+                encryptPanel.repaint();
                 super.mouseClicked(e);
             }
         });

@@ -113,10 +113,11 @@
             </properties>
             <border type="none"/>
             <children>
-              <grid id="4fb59" layout-manager="FlowLayout" hgap="5" vgap="0" flow-align="1">
+              <grid id="4fb59" binding="encryptPanel" layout-manager="FlowLayout" hgap="5" vgap="0" flow-align="1">
                 <constraints/>
                 <properties>
                   <background color="-14116416"/>
+                  <opaque value="true"/>
                   <preferredSize width="90" height="40"/>
                 </properties>
                 <border type="none"/>
@@ -151,7 +152,7 @@
                   <text value=""/>
                 </properties>
               </component>
-              <grid id="cfe42" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="1">
+              <grid id="cfe42" binding="decryptPanel" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="1">
                 <constraints/>
                 <properties>
                   <background color="-14116416"/>
@@ -418,6 +419,15 @@
                   <horizontalAlignment value="0"/>
                   <preferredSize width="250" height="30"/>
                   <text value="Label"/>
+                </properties>
+              </component>
+              <component id="71001" class="javax.swing.JLabel" binding="errorMessageLabel">
+                <constraints/>
+                <properties>
+                  <background color="-203521"/>
+                  <opaque value="true"/>
+                  <preferredSize width="210" height="150"/>
+                  <text value=""/>
                 </properties>
               </component>
             </children>
