@@ -19,6 +19,10 @@ public class DecodeForm {
     private JLabel encryptButton;
     private JLabel encryptButtonLabel;
     private JLabel errorMessageLabel;
+    private JLabel decodeButton;
+    private JLabel decodeErrorMessageLabel;
+    private JTextPane decryptedText;
+
 
     public JPanel getDecodePanel() {
         return decodePanel;
@@ -130,5 +134,29 @@ public class DecodeForm {
 
     public void setErrorMessageLabel(JLabel errorMessageLabel) {
         this.errorMessageLabel = errorMessageLabel;
+    }
+
+    public JLabel getDecodeButton() {
+        return decodeButton;
+    }
+
+    public void setDecodeButton(JLabel decodeButton) {
+        this.decodeButton = decodeButton;
+    }
+
+    public JLabel getDecodeErrorMessageLabel() {
+        return decodeErrorMessageLabel;
+    }
+
+    public void setDecodeErrorMessageLabel(JLabel decodeErrorMessageLabel) {
+        this.decodeErrorMessageLabel = decodeErrorMessageLabel;
+    }
+
+    public JTextPane getDecryptedText() {
+        return decryptedText;
+    }
+
+    public void setDecryptedText(JTextPane decryptedText) {
+        this.decryptedText = decryptedText;
     }
 }

@@ -126,7 +126,7 @@ public class MainForm extends Container {
                 decodeForm.getOneBitArrowUp().setIcon(Utils.getScaledImageIconFromRsources("arrowUp", 30, 30));
                 decodeForm.getTwoBitArrowUp().setIcon(null);
                 decodeForm.getFourBitArrowUp().setIcon(null);
-                steganography.setBitEncryptionCount(1);
+                steganography.setBitDecryptionCount(1);
                 super.mouseClicked(e);
             }
         });
@@ -136,7 +136,7 @@ public class MainForm extends Container {
                 decodeForm.getOneBitArrowUp().setIcon(null);
                 decodeForm.getTwoBitArrowUp().setIcon(Utils.getScaledImageIconFromRsources("arrowUp", 30, 30));
                 decodeForm.getFourBitArrowUp().setIcon(null);
-                steganography.setBitEncryptionCount(2);
+                steganography.setBitDecryptionCount(2);
                 super.mouseClicked(e);
             }
         });
@@ -146,7 +146,7 @@ public class MainForm extends Container {
                 decodeForm.getOneBitArrowUp().setIcon(null);
                 decodeForm.getTwoBitArrowUp().setIcon(null);
                 decodeForm.getFourBitArrowUp().setIcon(Utils.getScaledImageIconFromRsources("arrowUp", 30, 30));
-                steganography.setBitEncryptionCount(4);
+                steganography.setBitDecryptionCount(4);
                 super.mouseClicked(e);
             }
         });
@@ -192,11 +192,40 @@ public class MainForm extends Container {
                 }
             }
         });
+
+        decodeForm.getAddIDecodeImageButton().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                fileChooser.setSelectedFile(null);
+                fileChooser.resetChoosableFileFilters();
+                fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("PNG files", "png","PNG"));
+                fileChooser.updateUI();
+                int returnVal = fileChooser.showOpenDialog(MainForm.this);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File sourceImageFile = fileChooser.getSelectedFile();
+                    try {
+                        steganography.setTargetDecryptImage(Utils.getBufferedImageFromFile(sourceImageFile));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    decodeForm.getDecodeSourceImage().setIcon(Utils.getScaledImageIconFromFile(sourceImageFile, 348, 478));
+                }
+            }
+        });
         removeImageButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 sourceImage.setIcon(Utils.getScaledImageIconFromRsources("photoMock", 350, 350));
                 steganography.setSourceImage(null);
+                super.mouseClicked(e);
+            }
+        });
+        decodeForm.getRemoveDecodeImageButton().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                decodeForm.getDecodeSourceImage().setIcon(Utils.getScaledImageIconFromRsources("photoMock", 350, 350));
+                steganography.setTargetDecryptImage(null);
                 super.mouseClicked(e);
             }
         });
@@ -242,6 +271,30 @@ public class MainForm extends Container {
                         builder.append(error);
                         builder.append("\n");
                         errorMessageLabel.setText(builder.toString());
+                    }
+                }
+            }
+        });
+
+        decodeForm.getDecodeButton().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                steganography.setErrors(new ArrayList<>());
+                decodeForm.getDecodeErrorMessageLabel().setText("");
+                if (steganography.getTargetImage() == null) {
+                    decodeForm.getDecodeErrorMessageLabel().setText("");
+                }
+                String decodedText = steganography.decode();
+                if (!decodedText.isEmpty()) {
+                    decodeForm.getDecryptedText().setText(decodedText);
+                } else {
+                    for (String error : steganography.getErrors()) {
+                        StringBuilder builder = new StringBuilder();
+                        builder.append(error);
+                        builder.append("\n");
+                        decodeForm.getDecodeErrorMessageLabel().setText(builder.toString());
+                        decodeForm.getDecryptedText().setText("No text found in image");
                     }
                 }
             }
@@ -297,7 +350,9 @@ public class MainForm extends Container {
         this.oneBitArrowUp.setIcon(Utils.getScaledImageIconFromRsources("arrowUp", 30, 30));
         decodeForm.getOneBitArrowUp().setIcon(Utils.getScaledImageIconFromRsources("arrowUp", 30, 30));
         this.encryptButton.setIcon(Utils.getScaledImageIconFromRsources("encryptButton", 70, 70));
+        decodeForm.getDecodeButton().setIcon(Utils.getScaledImageIconFromRsources("encryptButton", 70, 70));
         this.encryptButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        decodeForm.getDecodeButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, IOException, URISyntaxException {
