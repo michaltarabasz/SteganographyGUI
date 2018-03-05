@@ -12,6 +12,11 @@ import java.nio.file.Files;
 public class Steganography {
 
     static String bigText = " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mollis gravida tristique. Pellentesque dapibus urna vel interdum luctus. Proin egestas consectetur felis eget molestie. Aenean gravida blandit elit non ultricies. Nam eu dignissim arcu. Integer ut erat est. Nullam eleifend condimentum accumsan. Sed sodales rhoncus aliquam. Vivamus dapibus, dolor vitae placerat blandit, diam elit finibus augue, a commodo urna turpis at enim. In rutrum vulputate condimentum.Sed in luctus eros, nec sollicitudin lectus. Quisque auctor quam enim, sit amet euismod enim tristique quis. Nunc dignissim nisl in urna tempor dignissim. Vivamus eleifend nunc ac nibh viverra ultricies. Aliquam a nisl ut lectus faucibus faucibus tempus vel turpis. Ut tempor sem in libero vestibulum malesuada. Etiam sagittis rutrum ante eget porta. Pellentesque lobortis lacinia lacus, ac vestibulum nibh. Etiam pellentesque ultricies dolor, non sollicitudin augue rhoncus eget. Donec molestie lacus nec vestibulum tincidunt. Nullam tristique ullamcorper pharetra. Nulla orci lectus, dictum eget aliquam sed, tincidunt quis diam. Suspendisse quis vehicula tortor, in egestas nisi.Cras ornare ac turpis ac lobortis. Quisque tincidunt ante ac ligula placerat tristique. Duis et risus non tellus aliquam lacinia. Curabitur in arcu a justo laoreet varius. Phasellus id feugiat lectus. Duis id sapien vel urna tincidunt pulvinar in eu lacus. Nunc nec vulputate mi. Ut aliquam risus ut ligula dapibus, ac ultricies dui aliquam.Nulla elementum nisl vel pulvinar cursus. Suspendisse venenatis erat odio, vitae ultrices diam facilisis non. Fusce vitae nibh arcu. Suspendisse suscipit elementum nulla, sit amet lacinia sem congue volutpat. Curabitur in ante urna. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec lacinia neque nec dapibus sodales. Donec sollicitudin massa in arcu tristique ornare sed et ipsum. Pellentesque tempus magna lectus, sit amet consequat elit gravida a. Quisque elementum neque vulputate, posuere tellus et, condimentum enim. ";
+    private File sourceImage = null;
+    private File targetImage = null;
+
+
+
     public static void main(String[] args) {
         Steganography steganography = new Steganography();
         steganography.encode(args[0], args[1], steganography.readTextFromFile(args[2]));
@@ -237,5 +242,21 @@ public class Steganography {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public File getSourceImage() {
+        return sourceImage;
+    }
+
+    public void setSourceImage(File sourceImage) {
+        this.sourceImage = sourceImage;
+    }
+
+    public File getTargetImage() {
+        return targetImage;
+    }
+
+    public void setTargetImage(File targetImage) {
+        this.targetImage = targetImage;
     }
 }
