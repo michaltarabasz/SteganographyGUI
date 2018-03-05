@@ -6,8 +6,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 
 public class Steganography {
 
@@ -19,7 +17,7 @@ public class Steganography {
 
     public static void main(String[] args) {
         Steganography steganography = new Steganography();
-        steganography.encode(args[0], args[1], steganography.readTextFromFile(args[2]));
+        steganography.encode(args[0], args[1], Utils.readTextFromPath(args[2]));
         //String decoded = steganography.decode(null, args[0]);
         //System.out.println("Decoded: " + decoded);
     }
@@ -234,15 +232,7 @@ public class Steganography {
         return result;
     }
 
-    public String readTextFromFile(String path){
-        File file = new File(path);
-        try {
-            return new String(Files.readAllBytes(file.toPath()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 
     public File getSourceImage() {
         return sourceImage;

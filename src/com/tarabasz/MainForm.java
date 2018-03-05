@@ -1,13 +1,13 @@
 package com.tarabasz;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -58,13 +58,14 @@ public class MainForm extends Container {
     public MainForm() throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, URISyntaxException {
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         fileChooser.setPreferredSize(new Dimension(700,500));
+        fileChooser.setAcceptAllFileFilterUsed(false);
         imagePreview = new ImagePreview();
         setLanguage("en");
         setElementsIcons();
         decryptPanel.setOpaque(false);
         encryptPanel.setOpaque(true);
         this.frame = new JFrame("Steganography - Michal Tarabasz");
-        frame.setIconImage(ImageUtils.getImageFromRsources("appIco"));
+        frame.setIconImage(Utils.getImageFromRsources("appIco"));
         frame.setContentPane(this.panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
@@ -89,7 +90,7 @@ public class MainForm extends Container {
         oneBitButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                oneBitArrowUp.setIcon(ImageUtils.getScaledImageIconFromRsources("arrowUp", 30, 30));
+                oneBitArrowUp.setIcon(Utils.getScaledImageIconFromRsources("arrowUp", 30, 30));
                 twoBitArrowUp.setIcon(null);
                 fourBitArrowUp.setIcon(null);
                 super.mouseClicked(e);
@@ -99,7 +100,7 @@ public class MainForm extends Container {
             @Override
             public void mouseClicked(MouseEvent e) {
                 oneBitArrowUp.setIcon(null);
-                twoBitArrowUp.setIcon(ImageUtils.getScaledImageIconFromRsources("arrowUp", 30, 30));
+                twoBitArrowUp.setIcon(Utils.getScaledImageIconFromRsources("arrowUp", 30, 30));
                 fourBitArrowUp.setIcon(null);
                 super.mouseClicked(e);
             }
@@ -109,7 +110,7 @@ public class MainForm extends Container {
             public void mouseClicked(MouseEvent e) {
                 oneBitArrowUp.setIcon(null);
                 twoBitArrowUp.setIcon(null);
-                fourBitArrowUp.setIcon(ImageUtils.getScaledImageIconFromRsources("arrowUp", 30, 30));
+                fourBitArrowUp.setIcon(Utils.getScaledImageIconFromRsources("arrowUp", 30, 30));
                 super.mouseClicked(e);
             }
         });
@@ -140,19 +141,23 @@ public class MainForm extends Container {
         addImageButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                fileChooser.setSelectedFile(null);
+                fileChooser.resetChoosableFileFilters();
+                fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("PNG files", "png","PNG"));
+                fileChooser.updateUI();
                 int returnVal = fileChooser.showOpenDialog(MainForm.this);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     File sourceImageFile = fileChooser.getSelectedFile();
                     steganography.setSourceImage(sourceImageFile);
-                    sourceImage.setIcon(ImageUtils.getScaledImageFromFile(sourceImageFile, 348, 478));
+                    sourceImage.setIcon(Utils.getScaledImageFromFile(sourceImageFile, 348, 478));
                 }
-                super.mouseClicked(e);
             }
         });
         removeImageButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                sourceImage.setIcon(ImageUtils.getScaledImageIconFromRsources("photoMock", 350, 350));
+                sourceImage.setIcon(Utils.getScaledImageIconFromRsources("photoMock", 350, 350));
                 steganography.setSourceImage(null);
                 super.mouseClicked(e);
             }
@@ -160,32 +165,41 @@ public class MainForm extends Container {
         addTextButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
                 super.mouseClicked(e);
+                fileChooser.setSelectedFile(null);
+                fileChooser.resetChoosableFileFilters();
+                fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Text files", "txt"));
+                fileChooser.updateUI();
+                int returnVal = fileChooser.showOpenDialog(MainForm.this);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File sourceTextFile = fileChooser.getSelectedFile();
+                    String text = Utils.readTextFromFile(sourceTextFile);
+                    sourceTextField.setText(text);
+                }
             }
         });
     }
 
     public void setElementsIcons() {
-        this.greenLockButton.setIcon(ImageUtils.getScaledImageIconFromRsources("lock", 90, 90));
+        this.greenLockButton.setIcon(Utils.getScaledImageIconFromRsources("lock", 90, 90));
         this.greenLockButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        this.redLockButton.setIcon(ImageUtils.getScaledImageIconFromRsources("unlock", 90, 90));
+        this.redLockButton.setIcon(Utils.getScaledImageIconFromRsources("unlock", 90, 90));
         this.redLockButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        this.sourceImage.setIcon(ImageUtils.getScaledImageIconFromRsources("photoMock", 350, 350));
-        this.addTextButton.setIcon(ImageUtils.getScaledImageIconFromRsources("textFileButton", 25, 25));
+        this.sourceImage.setIcon(Utils.getScaledImageIconFromRsources("photoMock", 350, 350));
+        this.addTextButton.setIcon(Utils.getScaledImageIconFromRsources("textFileButton", 25, 25));
         this.addTextButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        this.addImageButton.setIcon(ImageUtils.getScaledImageIconFromRsources("addButton", 40, 40));
+        this.addImageButton.setIcon(Utils.getScaledImageIconFromRsources("addButton", 40, 40));
         this.addImageButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        this.removeImageButton.setIcon(ImageUtils.getScaledImageIconFromRsources("removeButton", 40, 40));
+        this.removeImageButton.setIcon(Utils.getScaledImageIconFromRsources("removeButton", 40, 40));
         this.removeImageButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        this.oneBitButton.setIcon(ImageUtils.getScaledImageIconFromRsources("1bit", 60, 60));
+        this.oneBitButton.setIcon(Utils.getScaledImageIconFromRsources("1bit", 60, 60));
         this.oneBitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        this.twoBitButton.setIcon(ImageUtils.getScaledImageIconFromRsources("2bit", 60, 60));
+        this.twoBitButton.setIcon(Utils.getScaledImageIconFromRsources("2bit", 60, 60));
         this.twoBitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        this.fourBitButton.setIcon(ImageUtils.getScaledImageIconFromRsources("4bits", 60, 60));
+        this.fourBitButton.setIcon(Utils.getScaledImageIconFromRsources("4bits", 60, 60));
         this.fourBitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        this.oneBitArrowUp.setIcon(ImageUtils.getScaledImageIconFromRsources("arrowUp", 30, 30));
-        this.encryptButton.setIcon(ImageUtils.getScaledImageIconFromRsources("encryptButton", 70, 70));
+        this.oneBitArrowUp.setIcon(Utils.getScaledImageIconFromRsources("arrowUp", 30, 30));
+        this.encryptButton.setIcon(Utils.getScaledImageIconFromRsources("encryptButton", 70, 70));
         this.encryptButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 

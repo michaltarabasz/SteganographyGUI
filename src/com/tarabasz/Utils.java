@@ -3,9 +3,11 @@ package com.tarabasz;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 
-public class ImageUtils {
+public class Utils {
 
 
     static ImageIcon getScaledImageIconFromRsources(String resourceName)  {
@@ -43,5 +45,19 @@ public class ImageUtils {
         Image newimg = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
         img = new ImageIcon(newimg);
         return img;
+    }
+
+    static String readTextFromPath(String path) {
+        File file = new File(path);
+        return readTextFromFile(file);
+    }
+
+    static String readTextFromFile(File file) {
+        try {
+            return new String(Files.readAllBytes(file.toPath()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
