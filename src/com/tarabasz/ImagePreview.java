@@ -12,6 +12,8 @@ public class ImagePreview {
     private JLabel zoomedOriginalImageLabel;
     private JLabel zoomedEncryptedImageLabel;
     private JButton saveButton;
+    private JLabel originalImagePreview;
+    private JLabel targetImagePreview;
     public JLabel greenLockButton;
 
 
@@ -61,5 +63,21 @@ public class ImagePreview {
 
     public void setSaveButton(JButton saveButton) {
         this.saveButton = saveButton;
+    }
+
+    public JLabel getOriginalImagePreview() {
+        return originalImagePreview;
+    }
+
+    public void setOriginalImagePreview(JLabel originalImagePreview) {
+        this.originalImagePreview = originalImagePreview;
+    }
+
+    public JLabel getTargetImagePreview() {
+        return targetImagePreview;
+    }
+
+    public void setTargetImagePreview(JLabel targetImagePreview) {
+        this.targetImagePreview = targetImagePreview;
     }
 }

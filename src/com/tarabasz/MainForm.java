@@ -1,7 +1,6 @@
 package com.tarabasz;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -93,6 +93,7 @@ public class MainForm extends Container {
                 oneBitArrowUp.setIcon(Utils.getScaledImageIconFromRsources("arrowUp", 30, 30));
                 twoBitArrowUp.setIcon(null);
                 fourBitArrowUp.setIcon(null);
+                steganography.setBitEncryptionCount(1);
                 super.mouseClicked(e);
             }
         });
@@ -102,6 +103,7 @@ public class MainForm extends Container {
                 oneBitArrowUp.setIcon(null);
                 twoBitArrowUp.setIcon(Utils.getScaledImageIconFromRsources("arrowUp", 30, 30));
                 fourBitArrowUp.setIcon(null);
+                steganography.setBitEncryptionCount(2);
                 super.mouseClicked(e);
             }
         });
@@ -111,6 +113,7 @@ public class MainForm extends Container {
                 oneBitArrowUp.setIcon(null);
                 twoBitArrowUp.setIcon(null);
                 fourBitArrowUp.setIcon(Utils.getScaledImageIconFromRsources("arrowUp", 30, 30));
+                steganography.setBitEncryptionCount(4);
                 super.mouseClicked(e);
             }
         });
@@ -150,7 +153,7 @@ public class MainForm extends Container {
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     File sourceImageFile = fileChooser.getSelectedFile();
                     steganography.setSourceImage(sourceImageFile);
-                    sourceImage.setIcon(Utils.getScaledImageFromFile(sourceImageFile, 348, 478));
+                    sourceImage.setIcon(Utils.getScaledImageIconFromFile(sourceImageFile, 348, 478));
                 }
             }
         });
@@ -175,6 +178,29 @@ public class MainForm extends Container {
                     File sourceTextFile = fileChooser.getSelectedFile();
                     String text = Utils.readTextFromFile(sourceTextFile);
                     sourceTextField.setText(text);
+                }
+            }
+        });
+        encryptButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                steganography.setErrors(new ArrayList<>());
+                errorMessageLabel.setText("");
+                super.mouseClicked(e);
+                if(sourceTextField.getText().isEmpty()){
+                    errorMessageLabel.setText(labelsBundle.getString("emptyTextError"));
+                }
+                steganography.setTextToHide(sourceTextField.getText());
+                if(steganography.encode()){
+                    imagePreview.getOriginalImagePreview().setIcon(Utils.getScaledImageIconFromFile(steganography.getSourceImage(), 298, 377));
+                    imagePreview.getTargetImagePreview().setIcon(Utils.getScaledImageIconFromImage(steganography.getTargetImage(),298,377));
+                    bottomPanel.setVisible(false);
+                    imagePreview.getImagePreviewPanel().setVisible(true);
+                    decryptPanel.setOpaque(true);
+                    decryptPanel.repaint();
+                    encryptPanel.setOpaque(false);
+                    encryptPanel.repaint();
+                    super.mouseClicked(e);
                 }
             }
         });

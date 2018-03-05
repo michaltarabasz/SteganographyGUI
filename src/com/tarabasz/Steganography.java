@@ -6,37 +6,59 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Steganography {
 
     static String bigText = " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mollis gravida tristique. Pellentesque dapibus urna vel interdum luctus. Proin egestas consectetur felis eget molestie. Aenean gravida blandit elit non ultricies. Nam eu dignissim arcu. Integer ut erat est. Nullam eleifend condimentum accumsan. Sed sodales rhoncus aliquam. Vivamus dapibus, dolor vitae placerat blandit, diam elit finibus augue, a commodo urna turpis at enim. In rutrum vulputate condimentum.Sed in luctus eros, nec sollicitudin lectus. Quisque auctor quam enim, sit amet euismod enim tristique quis. Nunc dignissim nisl in urna tempor dignissim. Vivamus eleifend nunc ac nibh viverra ultricies. Aliquam a nisl ut lectus faucibus faucibus tempus vel turpis. Ut tempor sem in libero vestibulum malesuada. Etiam sagittis rutrum ante eget porta. Pellentesque lobortis lacinia lacus, ac vestibulum nibh. Etiam pellentesque ultricies dolor, non sollicitudin augue rhoncus eget. Donec molestie lacus nec vestibulum tincidunt. Nullam tristique ullamcorper pharetra. Nulla orci lectus, dictum eget aliquam sed, tincidunt quis diam. Suspendisse quis vehicula tortor, in egestas nisi.Cras ornare ac turpis ac lobortis. Quisque tincidunt ante ac ligula placerat tristique. Duis et risus non tellus aliquam lacinia. Curabitur in arcu a justo laoreet varius. Phasellus id feugiat lectus. Duis id sapien vel urna tincidunt pulvinar in eu lacus. Nunc nec vulputate mi. Ut aliquam risus ut ligula dapibus, ac ultricies dui aliquam.Nulla elementum nisl vel pulvinar cursus. Suspendisse venenatis erat odio, vitae ultrices diam facilisis non. Fusce vitae nibh arcu. Suspendisse suscipit elementum nulla, sit amet lacinia sem congue volutpat. Curabitur in ante urna. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec lacinia neque nec dapibus sodales. Donec sollicitudin massa in arcu tristique ornare sed et ipsum. Pellentesque tempus magna lectus, sit amet consequat elit gravida a. Quisque elementum neque vulputate, posuere tellus et, condimentum enim. ";
     private File sourceImage = null;
-    private File targetImage = null;
+    private BufferedImage targetImage = null;
+    private int bitEncryptionCount = 1;
+    private ArrayList<String> errors;
+    private String textToHide = "";
 
 
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         Steganography steganography = new Steganography();
-        steganography.encode(args[0], args[1], Utils.readTextFromPath(args[2]));
+        //steganography.encode(args[0], args[1], Utils.readTextFromPath(args[2]));
         //String decoded = steganography.decode(null, args[0]);
         //System.out.println("Decoded: " + decoded);
-    }
+    }*/
 
     public Steganography() {
     }
 
-    public boolean encode(String fileInput, String fileOutput, String message) {
-        BufferedImage imageOriginal = getImage(fileInput);
-        BufferedImage image = createWorkingCopy(imageOriginal);
-        image = hideMessageInImage(image, message);
+    public boolean encode() {
+        BufferedImage imageOriginal = null;
+        BufferedImage imageTarget = null;
+        try {
+            if (sourceImage != null) {
+                imageOriginal = Utils.getBufferedImageFromFile(sourceImage);
+                BufferedImage image = createWorkingCopy(imageOriginal);
+                targetImage = hideMessageInImage(image, getTextToHide(),bitEncryptionCount);
+            } else {
+                errors.add("Empty source image");
+            }
+        } catch (IOException ex) {
+            errors.add(ex.getMessage());
+            return false;
+        }
+        return true;
+    }
 
-        return saveImage(image, new File(fileOutput));
+    public boolean encode(String fileInput, String fileOutput, String message) throws IOException {
+        BufferedImage imageOriginal = Utils.getImage(fileInput);
+        BufferedImage image = createWorkingCopy(imageOriginal);
+        targetImage = hideMessageInImage(image, message);
+        return Utils.saveImage(image, new File(fileOutput));
     }
 
     public String decode(String path, String name) {
         byte[] decode;
         try {
-            BufferedImage image = createWorkingCopy(getImage(name));
+            BufferedImage image = createWorkingCopy(Utils.getImage(name));
             //decode = decodeText(getImageDataBytes(image));
             decode = decodeTextLast4Bits(getImageDataBytes(image));
             return (new String(decode));
@@ -46,32 +68,34 @@ public class Steganography {
         }
     }
 
-    private BufferedImage getImage(String f) {
-        BufferedImage image = null;
-        File file = new File(f);
-
+    private BufferedImage hideMessageInImage(BufferedImage image, String text, int lastBytesCount) {
+        byte img[] = getImageDataBytes(image);
+        byte msg[] = text.getBytes();
+        byte len[] = getBytesFromInteger(msg.length);//message length encoded in 4 bytes
+        byte length = (byte) msg.length;
+        //32 bits from encoding message length in header (4 bytes)
+        if (msg.length + 32 > img.length) {
+            throw new IllegalArgumentException("File not long enough!");
+        }
         try {
-            image = ImageIO.read(file);
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex.getMessage());
+            encodeTextLength(img, len);
+            switch (lastBytesCount) {
+                case 1:
+                    encodeText(img, msg);
+                    break;
+                case 2:
+                    encodeTextLast2Bits(img, msg);
+                    break;
+                case 4:
+                    encodeTextLast4Bits(img, msg);
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
         return image;
     }
 
-    private boolean saveImage(BufferedImage image, File file) {
-        String extensionN = file.getName();
-        String[] extensionT = extensionN.split("\\.");
-        int len = extensionT.length;
-        String extension = file.getName().split("\\.")[1];
-        try {
-            file.delete(); //delete resources used by the File
-            ImageIO.write(image, extension, file);
-            return true;
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            return false;
-        }
-    }
 
     private BufferedImage hideMessageInImage(BufferedImage image, String text) {
         byte img[] = getImageDataBytes(image);
@@ -242,11 +266,35 @@ public class Steganography {
         this.sourceImage = sourceImage;
     }
 
-    public File getTargetImage() {
+    public BufferedImage getTargetImage() {
         return targetImage;
     }
 
-    public void setTargetImage(File targetImage) {
+    public void setTargetImage(BufferedImage targetImage) {
         this.targetImage = targetImage;
+    }
+
+    public int getBitEncryptionCount() {
+        return bitEncryptionCount;
+    }
+
+    public void setBitEncryptionCount(int bitEncryptionCount) {
+        this.bitEncryptionCount = bitEncryptionCount;
+    }
+
+    public ArrayList<String> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(ArrayList<String> errors) {
+        this.errors = errors;
+    }
+
+    public String getTextToHide() {
+        return textToHide;
+    }
+
+    public void setTextToHide(String textToHide) {
+        this.textToHide = textToHide;
     }
 }

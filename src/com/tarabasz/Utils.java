@@ -1,7 +1,9 @@
 package com.tarabasz;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -39,8 +41,16 @@ public class Utils {
          return img;
     }
 
-    static ImageIcon getScaledImageFromFile(File file, int width, int height){
+    static ImageIcon getScaledImageIconFromFile(File file, int width, int height){
         ImageIcon img = new ImageIcon(file.getAbsolutePath());
+        Image image = img.getImage();
+        Image newimg = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+        img = new ImageIcon(newimg);
+        return img;
+    }
+
+    static ImageIcon getScaledImageIconFromImage(BufferedImage file, int width, int height){
+        ImageIcon img = new ImageIcon(file);
         Image image = img.getImage();
         Image newimg = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
         img = new ImageIcon(newimg);
@@ -59,5 +69,33 @@ public class Utils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    static BufferedImage getBufferedImageFromFile(File file) throws IOException {
+        BufferedImage image = null;
+        image = ImageIO.read(file);
+        return image;
+    }
+
+    static BufferedImage getImage(String f) throws IOException {
+        BufferedImage image = null;
+        File file = new File(f);
+        image = ImageIO.read(file);
+        return image;
+    }
+
+    static boolean saveImage(BufferedImage image, File file) {
+        String extensionN = file.getName();
+        String[] extensionT = extensionN.split("\\.");
+        int len = extensionT.length;
+        String extension = file.getName().split("\\.")[1];
+        try {
+            file.delete(); //delete resources used by the File
+            ImageIO.write(image, extension, file);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return false;
+        }
     }
 }

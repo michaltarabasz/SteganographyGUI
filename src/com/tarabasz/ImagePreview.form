@@ -28,7 +28,7 @@
               <text value="Label"/>
             </properties>
           </component>
-          <component id="b68ef" class="javax.swing.JLabel">
+          <component id="b68ef" class="javax.swing.JLabel" binding="originalImagePreview">
             <constraints/>
             <properties>
               <autoscrolls value="false"/>
@@ -67,7 +67,7 @@
               <text value="Label"/>
             </properties>
           </component>
-          <component id="882f6" class="javax.swing.JLabel">
+          <component id="882f6" class="javax.swing.JLabel" binding="targetImagePreview">
             <constraints/>
             <properties>
               <autoscrolls value="false"/>
