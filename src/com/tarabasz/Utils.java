@@ -57,6 +57,31 @@ public class Utils {
         return img;
     }
 
+    static ImageIcon getScaledImageIconPreviewFromImage(BufferedImage fileSource, int width, int height,int previewSize){
+        BufferedImage file = fileSource.getSubimage(0,0,previewSize,previewSize);
+        ImageIcon img = new ImageIcon(file);
+        Image image = img.getImage();
+        Image newimg = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+        img = new ImageIcon(newimg);
+        return img;
+    }
+
+    static ImageIcon getScaledImageIconPreviewFromFile(File fileSource, int width, int height,int previewSize) {
+        try {
+            BufferedImage imageSource = getBufferedImageFromFile(fileSource);
+            BufferedImage file = imageSource.getSubimage(0, 0, previewSize, previewSize);
+            ImageIcon img = new ImageIcon(file);
+            Image image = img.getImage();
+            Image newimg = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+            img = new ImageIcon(newimg);
+            return img;
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+
     static String readTextFromPath(String path) {
         File file = new File(path);
         return readTextFromFile(file);

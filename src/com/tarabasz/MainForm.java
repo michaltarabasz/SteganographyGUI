@@ -54,12 +54,14 @@ public class MainForm extends Container {
     private JFileChooser fileChooser = new JFileChooser();
     private Steganography steganography = new Steganography();
     ImagePreview imagePreview;
+    DecodeForm decodeForm;
 
     public MainForm() throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, URISyntaxException {
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         fileChooser.setPreferredSize(new Dimension(700,500));
         fileChooser.setAcceptAllFileFilterUsed(false);
         imagePreview = new ImagePreview();
+        decodeForm = new DecodeForm();
         setLanguage("en");
         setElementsIcons();
         decryptPanel.setOpaque(false);
@@ -73,6 +75,7 @@ public class MainForm extends Container {
         frame.setResizable(false);
         frame.setVisible(true);
         frame.getContentPane().add(imagePreview.getImagePreviewPanel());
+        frame.getContentPane().add(decodeForm.getDecodePanel());
         frame.getContentPane().revalidate();
         plButton.addActionListener(new ActionListener() {
             @Override
@@ -117,11 +120,42 @@ public class MainForm extends Container {
                 super.mouseClicked(e);
             }
         });
+        decodeForm.getOneBitButton().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                decodeForm.getOneBitArrowUp().setIcon(Utils.getScaledImageIconFromRsources("arrowUp", 30, 30));
+                decodeForm.getTwoBitArrowUp().setIcon(null);
+                decodeForm.getFourBitArrowUp().setIcon(null);
+                steganography.setBitEncryptionCount(1);
+                super.mouseClicked(e);
+            }
+        });
+        decodeForm.getTwoBitButton().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                decodeForm.getOneBitArrowUp().setIcon(null);
+                decodeForm.getTwoBitArrowUp().setIcon(Utils.getScaledImageIconFromRsources("arrowUp", 30, 30));
+                decodeForm.getFourBitArrowUp().setIcon(null);
+                steganography.setBitEncryptionCount(2);
+                super.mouseClicked(e);
+            }
+        });
+        decodeForm.getFourBitButton().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                decodeForm.getOneBitArrowUp().setIcon(null);
+                decodeForm.getTwoBitArrowUp().setIcon(null);
+                decodeForm.getFourBitArrowUp().setIcon(Utils.getScaledImageIconFromRsources("arrowUp", 30, 30));
+                steganography.setBitEncryptionCount(4);
+                super.mouseClicked(e);
+            }
+        });
         redLockButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 bottomPanel.setVisible(false);
-                imagePreview.getImagePreviewPanel().setVisible(true);
+                imagePreview.getImagePreviewPanel().setVisible(false);
+                decodeForm.getDecodePanel().setVisible(true);
                 decryptPanel.setOpaque(true);
                 decryptPanel.repaint();
                 encryptPanel.setOpaque(false);
@@ -134,6 +168,7 @@ public class MainForm extends Container {
             public void mouseClicked(MouseEvent e) {
                 bottomPanel.setVisible(true);
                 imagePreview.getImagePreviewPanel().setVisible(false);
+                decodeForm.getDecodePanel().setVisible(false);
                 decryptPanel.setOpaque(false);
                 decryptPanel.repaint();
                 encryptPanel.setOpaque(true);
@@ -193,15 +228,39 @@ public class MainForm extends Container {
                 steganography.setTextToHide(sourceTextField.getText());
                 if(steganography.encode()){
                     imagePreview.getOriginalImagePreview().setIcon(Utils.getScaledImageIconFromFile(steganography.getSourceImage(), 298, 377));
+                    imagePreview.getZoomedOriginalImagePreview().setIcon(Utils.getScaledImageIconPreviewFromFile(steganography.getSourceImage(), 158, 157,20));
                     imagePreview.getTargetImagePreview().setIcon(Utils.getScaledImageIconFromImage(steganography.getTargetImage(),298,377));
+                    imagePreview.getZoomedTargetImagePreview().setIcon(Utils.getScaledImageIconPreviewFromImage(steganography.getTargetImage(),158,157,20));
                     bottomPanel.setVisible(false);
+                    decodeForm.getDecodePanel().setVisible(false);
                     imagePreview.getImagePreviewPanel().setVisible(true);
-                    decryptPanel.setOpaque(true);
-                    decryptPanel.repaint();
-                    encryptPanel.setOpaque(false);
-                    encryptPanel.repaint();
                     super.mouseClicked(e);
                 }
+                else{
+                    for(String error : steganography.getErrors()){
+                        StringBuilder builder = new StringBuilder();
+                        builder.append(error);
+                        builder.append("\n");
+                        errorMessageLabel.setText(builder.toString());
+                    }
+                }
+            }
+        });
+        imagePreview.getSaveButton().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                fileChooser.setSelectedFile(null);
+                fileChooser.resetChoosableFileFilters();
+                fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("PNG files", "png","PNG"));
+                fileChooser.updateUI();
+                int returnVal = fileChooser.showSaveDialog(MainForm.this);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File targetImageFile = fileChooser.getSelectedFile();
+                if(Utils.saveImage(steganography.getTargetImage(),targetImageFile)){
+                    JOptionPane.showMessageDialog(null,"File saved");
+                }
+                }
+                super.mouseClicked(e);
             }
         });
     }
@@ -212,19 +271,31 @@ public class MainForm extends Container {
         this.redLockButton.setIcon(Utils.getScaledImageIconFromRsources("unlock", 90, 90));
         this.redLockButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.sourceImage.setIcon(Utils.getScaledImageIconFromRsources("photoMock", 350, 350));
+        decodeForm.getDecodeSourceImage().setIcon(Utils.getScaledImageIconFromRsources("photoMock", 350, 350));
         this.addTextButton.setIcon(Utils.getScaledImageIconFromRsources("textFileButton", 25, 25));
         this.addTextButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.addImageButton.setIcon(Utils.getScaledImageIconFromRsources("addButton", 40, 40));
+        decodeForm.getAddIDecodeImageButton().setIcon(Utils.getScaledImageIconFromRsources("addButton", 40, 40));
         this.addImageButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        decodeForm.getAddIDecodeImageButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.removeImageButton.setIcon(Utils.getScaledImageIconFromRsources("removeButton", 40, 40));
+        decodeForm.getRemoveDecodeImageButton().setIcon(Utils.getScaledImageIconFromRsources("removeButton", 40, 40));
         this.removeImageButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        decodeForm.getRemoveDecodeImageButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.oneBitButton.setIcon(Utils.getScaledImageIconFromRsources("1bit", 60, 60));
+        decodeForm.getOneBitButton().setIcon(Utils.getScaledImageIconFromRsources("1bit", 60, 60));
         this.oneBitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        decodeForm.getOneBitButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.twoBitButton.setIcon(Utils.getScaledImageIconFromRsources("2bit", 60, 60));
+        decodeForm.getTwoBitButton().setIcon(Utils.getScaledImageIconFromRsources("2bit", 60, 60));
         this.twoBitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        decodeForm.getTwoBitButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.fourBitButton.setIcon(Utils.getScaledImageIconFromRsources("4bits", 60, 60));
+        decodeForm.getFourBitButton().setIcon(Utils.getScaledImageIconFromRsources("4bits", 60, 60));
         this.fourBitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        decodeForm.getFourBitButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.oneBitArrowUp.setIcon(Utils.getScaledImageIconFromRsources("arrowUp", 30, 30));
+        decodeForm.getOneBitArrowUp().setIcon(Utils.getScaledImageIconFromRsources("arrowUp", 30, 30));
         this.encryptButton.setIcon(Utils.getScaledImageIconFromRsources("encryptButton", 70, 70));
         this.encryptButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
@@ -252,6 +323,7 @@ public class MainForm extends Container {
         imagePreview.getEncryptedImageLabel().setText(labelsBundle.getString("encryptedImageLabel"));
         imagePreview.getZoomedEncryptedImageLabel().setText(labelsBundle.getString("zoomedEncryptedImageLabel"));
         imagePreview.getSaveButton().setText(labelsBundle.getString("saveButton"));
+        decodeForm.getEncryptionByteConLabel().setText(labelsBundle.getString("encryptionByteConLabel"));
     }
 
 }

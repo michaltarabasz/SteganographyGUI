@@ -424,10 +424,12 @@
               <component id="71001" class="javax.swing.JLabel" binding="errorMessageLabel">
                 <constraints/>
                 <properties>
-                  <background color="-203521"/>
+                  <background color="-1"/>
                   <opaque value="true"/>
                   <preferredSize width="210" height="150"/>
                   <text value=""/>
+                  <verticalAlignment value="1"/>
+                  <verticalTextPosition value="1"/>
                 </properties>
               </component>
             </children>

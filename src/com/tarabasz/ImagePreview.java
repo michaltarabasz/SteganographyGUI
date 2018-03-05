@@ -2,6 +2,8 @@ package com.tarabasz;
 
 import javax.swing.*;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.URISyntaxException;
 
 
@@ -14,11 +16,14 @@ public class ImagePreview {
     private JButton saveButton;
     private JLabel originalImagePreview;
     private JLabel targetImagePreview;
+    private JLabel zoomedOriginalImagePreview;
+    private JLabel zoomedTargetImagePreview;
     public JLabel greenLockButton;
 
 
     public ImagePreview() throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, URISyntaxException {
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+
     }
 
     public JPanel getImagePreviewPanel(){
@@ -80,4 +85,21 @@ public class ImagePreview {
     public void setTargetImagePreview(JLabel targetImagePreview) {
         this.targetImagePreview = targetImagePreview;
     }
+
+    public JLabel getZoomedOriginalImagePreview() {
+        return zoomedOriginalImagePreview;
+    }
+
+    public void setZoomedOriginalImagePreview(JLabel zoomedOriginalImagePreview) {
+        this.zoomedOriginalImagePreview = zoomedOriginalImagePreview;
+    }
+
+    public JLabel getZoomedTargetImagePreview() {
+        return zoomedTargetImagePreview;
+    }
+
+    public void setZoomedTargetImagePreview(JLabel zoomedTargetImagePreview) {
+        this.zoomedTargetImagePreview = zoomedTargetImagePreview;
+    }
+
 }

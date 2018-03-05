@@ -39,13 +39,14 @@ public class Steganography {
                 BufferedImage image = createWorkingCopy(imageOriginal);
                 targetImage = hideMessageInImage(image, getTextToHide(),bitEncryptionCount);
             } else {
-                errors.add("Empty source image");
+                errors.add("Error: empty source image");
+                return false;
             }
         } catch (IOException ex) {
             errors.add(ex.getMessage());
             return false;
         }
-        return true;
+        return targetImage != null ? true : false;
     }
 
     public boolean encode(String fileInput, String fileOutput, String message) throws IOException {
@@ -75,7 +76,8 @@ public class Steganography {
         byte length = (byte) msg.length;
         //32 bits from encoding message length in header (4 bytes)
         if (msg.length + 32 > img.length) {
-            throw new IllegalArgumentException("File not long enough!");
+            errors.add("File too small to encode!");
+            return null;
         }
         try {
             encodeTextLength(img, len);
